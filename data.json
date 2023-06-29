@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Ментор 1",
+    "src": "/mentor_1.jpg"  },
+  {
+    "name": "Нурали",
+    "src": "/mentor_2.jpg"  },
+  {
+    "name": "Алмаз",
+    "src": "/mentor_3.jpg"  },
+  {
+    "name": "Арман",
+    "src": "/mentor_4.jpg"
+  },
+  {
+    "name": "Далида",
+    "src": "/mentor_5.jpg"
+  },
+  {
+    "name": "Ернур",
+    "src": "/mentor_6.jpg"
+  }
+]

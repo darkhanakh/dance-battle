@@ -1,13 +1,8 @@
+import router from "./router";
+import { RouterProvider } from "react-router-dom";
+
 function App() {
-  return (
-    <div>
-      <div className="container">
-        <h1>Лучшие танцоры n!</h1>
-        <p>Танцуй с любимыми менторами нашего дорогого инкубатора</p>
-        <button>Начать игру</button>
-      </div>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
