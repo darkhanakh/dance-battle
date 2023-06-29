@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MentorPickerItem from "../components/mentor-selection/MentorPickerItem.tsx";
 import data from "../../data.json";
 import MentorCard from "../components/mentor-selection/MentorCard.tsx";
+import { Link } from "react-router-dom";
 
 interface PlayersMentor {
   name: string;
@@ -69,7 +70,9 @@ const MentorSelection: React.FC = () => {
               ))}
             </div>
             {selectedMentors.player1 && selectedMentors.player2 ? (
-              <button className="btn btn-primary">Начать игру</button>
+              <Link to="/test-game" className="btn btn-primary">
+                Начать игру
+              </Link>
             ) : (
               <p className=" text-xl">
                 {renderPlayer(currentPlayer)} - Выбери ментора

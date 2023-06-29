@@ -1,0 +1,118 @@
+:root {
+    --arrow-outline: red;
+    --arrow-color: blue;
+    --rotation: 0deg;
+}
+
+body {
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+p{
+    margin: 0;
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    margin: auto;
+    margin-top: 50px;
+    height: 90vh;
+    width: 70vw;
+}
+
+.board-wrapper {
+    --arrow-outline: rgb(34, 34, 34);
+    --arrow-color: white;
+}
+
+.board-wrapper {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.arrow-wrapper {
+    height: 100px;
+    width: 100px;
+    /* transform: rotate(var(--rotation)); */
+    margin: 20px;
+}
+.arrow {
+    display: block;
+    position: absolute;
+    margin: 30px;
+    height: 50px;
+    width: 50px;
+    background-color: var(--arrow-color);
+    border-radius: 100px 15px 10px 15px;
+    border: solid var(--arrow-outline) 5px;
+    animation-duration: 3s;
+    animation-name: glow;
+    animation-iteration-count: infinite;
+}
+
+.arrow::before {
+    content: "";
+    top: 10px;
+    left: 20px;
+    display: block;
+    transform: rotate(-45deg) translateY(-50px);
+    position: absolute;
+    height: 50px;
+    width: 30px;
+    background-color: var(--arrow-color);
+    border-radius: 5px;
+}
+
+.arrow::after {
+    content: "";
+    z-index: -1;
+    top: 10px;
+    left: 20px;
+    height: 50px;
+    width: 30px;
+    display: block;
+    position: absolute;
+    transform: rotate(-45deg) translateY(-57px);
+    background-color: var(--arrow-outline);
+    border: solid var(--arrow-outline) 5px;
+    border-radius: 5px;
+    animation-duration: 3s;
+    animation-name: glow;
+    animation-iteration-count: infinite;
+}
+
+.up-arrow {
+    transform: rotate(-135deg);
+}
+
+.right-arrow {
+    transform: rotate(-45deg);
+}
+
+.down-arrow {
+    transform: rotate(45deg);
+}
+
+.left-arrow {
+    transform: rotate(135deg);
+}
+
+.new-row-generator {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
