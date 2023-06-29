@@ -7,6 +7,9 @@
 </head>
 <body>
   <script src="./main.js" type="module">
+    window.onload = function() {
+        window.parent.postMessage('Hello from iframe!', '*');
+    };
   </script>
 </body>
 </html>
