@@ -1,8 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
-import { MentorSelection } from "../pages";
-import Hero from "../pages/Hero.tsx";
-import Navbar from "../components/Navbar.tsx";
+import { createBrowserRouter } from "react-router-dom"
 import BattlePage from "../pages/BattlePage.tsx";
+import { MentorSelection, Hero, TestRhythm } from "../pages";
+import Navbar from "../components/layout/Navbar.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -31,6 +30,14 @@ const routes = createBrowserRouter([
       </>
     )
   }
+    path: "/test-game",
+    element: (
+      <>
+        <Navbar />
+        <TestRhythm />
+      </>
+    ),
+  },
 ]);
 
 export default routes;
