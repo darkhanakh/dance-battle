@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { MentorSelection } from "../pages";
 import Hero from "../pages/Hero.tsx";
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../components/layout/Navbar.tsx";
 
 const routes = createBrowserRouter([
   {

@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import MentorPickerItem from "../components/MentorPickerItem.tsx";
+import MentorPickerItem from "../components/mentor-selection/MentorPickerItem.tsx";
 import data from "../../data.json";
+import MentorCard from "../components/mentor-selection/MentorCard.tsx";
 
 interface PlayersMentor {
   name: string;
   src: string;
 }
 
-interface SelectedMentors {
+export interface SelectedMentors {
   player1: PlayersMentor | null;
   player2: PlayersMentor | null;
 }
 
-type CurrentPlayer = "player1" | "player2";
+export type CurrentPlayer = "player1" | "player2";
 
 const MentorSelection: React.FC = () => {
   const mentors: PlayersMentor[] = data;
@@ -48,20 +49,7 @@ const MentorSelection: React.FC = () => {
     <>
       <div className="flex items-center justify-center h-screen">
         <div className="flex items-center justify-between">
-          <div className="first-dancer max-w-md card">
-            {selectedMentors.player1 && (
-              <>
-                <h2 className="text-center mb-1 text-2xl">
-                  Выбор первого игрока
-                </h2>
-                <img
-                  className="w-fit h-96"
-                  src={selectedMentors.player1.src}
-                  alt="Selected Mentor"
-                />
-              </>
-            )}
-          </div>
+          <MentorCard selectedMentors={selectedMentors} player="player1" />
           <div className="flex flex-col justify-center items-center mx-5">
             <h1 className="text-primary text-4xl mb-3">
               Выбери своего ментора
@@ -88,20 +76,7 @@ const MentorSelection: React.FC = () => {
               </p>
             )}
           </div>
-          <div className="second-dancer max-w-md card">
-            {selectedMentors.player2 && (
-              <>
-                <h2 className="text-center mb-1 text-2xl">
-                  Выбор второго игрока
-                </h2>
-                <img
-                  className="w-fit h-96 max-w-fit"
-                  src={selectedMentors.player2.src}
-                  alt="Selected Mentor"
-                />
-              </>
-            )}
-          </div>
+          <MentorCard selectedMentors={selectedMentors} player="player2" />
         </div>
       </div>
     </>
