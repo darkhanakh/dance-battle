@@ -1,6 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import "./../styles/TestRhythms.css";
 import Countdown from "../components/layout/Countdown.tsx";
+// @ts-ignore
+import useSound from "use-sound";
+
+import music from "./../../public/assets/audios/music_1.mp3";
 
 const TestRhythm = () => {
   const [isCountdownEnded, setIsCountdownEnded] = useState(false);
@@ -8,6 +12,7 @@ const TestRhythm = () => {
   const [secondPlayerPoints, setSecondPlayerPoints] = useState(0);
   const [winner, setWinner] = useState("");
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [play, { stop }] = useSound(music, { volume: 0.5 });
 
   const firstIframeRef = useRef<HTMLIFrameElement>(null);
   const secondIframeRef = useRef<HTMLIFrameElement>(null);
@@ -100,6 +105,14 @@ const TestRhythm = () => {
     setIsCountdownEnded(true);
   };
 
+  const renderCountdownAndPlaySound = () => {
+    play();
+    setTimeout(() => {
+      stop();
+    }, 30000);
+    return <Countdown duration={3} onCountdownEnd={handleCountdownEnd} />;
+  };
+
   return (
     <div className="flex justify-between items-center">
       <div className="box" style={{ float: "left", marginRight: "20px" }}>
@@ -112,9 +125,7 @@ const TestRhythm = () => {
           style={{ border: "solid 1px black" }}
         ></iframe>
       </div>
-      {!isCountdownEnded && (
-        <Countdown duration={3} onCountdownEnd={handleCountdownEnd} />
-      )}
+      {!isCountdownEnded && renderCountdownAndPlaySound()}
 
       <div className="box" style={{ float: "left", marginRight: "20px" }}>
         <iframe

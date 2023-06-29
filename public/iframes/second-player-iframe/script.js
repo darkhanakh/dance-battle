@@ -2,7 +2,7 @@ let ACTIVE = null;
 const DIRECTIONS = ["ArrowLeft", "ArrowUp", "ArrowDown", "ArrowRight"];
 const COLORS = ["red", "orange", "yellow", "green", "blue", "purple"];
 let POINTS = 0;
-const GAME_DURATION = 10000;
+const GAME_DURATION = 30000;
 
 const board = document.getElementById("board");
 const generator = document.getElementById("new-row-generator");
@@ -113,7 +113,7 @@ const endGame = () => {
 };
 
 setTimeout(() => {
-  startGame(0.7, 2000);
+  startGame(0.7, 1500);
 }, 3000);
 
 window.addEventListener("message", function (event) {
