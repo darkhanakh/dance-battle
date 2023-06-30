@@ -93,25 +93,16 @@ const Game = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (isGameEnded) {
-      const winner = calculateWinner();
-      setWinner(winner);
-
-      // Delay for 5 seconds and then reset the game state
-      const toastTimeout = setTimeout(() => {
-        setIsGameEnded(false);
-      }, 5000);
-
-      // Clean up the timeout when the component unmounts
-      return () => {
-        clearTimeout(toastTimeout);
-      };
-    }
-  }, [isGameEnded]);
-
   const handleCountdownEnd = () => {
     setIsCountdownEnded(true);
+  };
+
+  const handleResetGame = () => {
+    setFirstPlayerPoints(0);
+    setSecondPlayerPoints(0);
+    setWinner("");
+    setIsCountdownEnded(false);
+    setIsGameEnded(false);
   };
 
   const renderCountdownAndPlaySound = () => {
@@ -135,7 +126,17 @@ const Game = () => {
         ></iframe>
       </div>
       {!isCountdownEnded && renderCountdownAndPlaySound()}
-      {isCountdownEnded && <Battle player1={player1} player2={player2} />}
+      {isCountdownEnded && !isGameEnded && (
+        <Battle player1={player1} player2={player2} />
+      )}
+      {isGameEnded && (
+        <div>
+          <div className="winner-text">{winner}</div>
+          <button className="btn btn-primary" onClick={handleResetGame}>
+            Reset Game
+          </button>
+        </div>
+      )}
       <div className="box" style={{ float: "left", marginRight: "20px" }}>
         <iframe
           ref={secondIframeRef}
@@ -146,14 +147,6 @@ const Game = () => {
           style={{ border: "solid 1px black" }}
         ></iframe>
       </div>
-
-      {isGameEnded && (
-        <div className="toast toast-top toast-center">
-          <div className="alert alert-success">
-            <span>{winner}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

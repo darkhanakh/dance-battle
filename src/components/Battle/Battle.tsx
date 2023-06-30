@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { FC } from "react";
 
 interface IBattle {
@@ -7,7 +7,6 @@ interface IBattle {
 }
 
 const Battle: FC<IBattle> = ({ player1, player2 }) => {
-  const [isIframeLoading, setIsIframeLoading] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const sendDataToIframe = () => {
     const iframe = iframeRef.current;
@@ -26,11 +25,8 @@ const Battle: FC<IBattle> = ({ player1, player2 }) => {
     setTimeout(() => {
       sendDataToIframe();
     }, 300);
-    const handleMessage = (event) => {
+    const handleMessage = (event: any) => {
       console.log("event.data", event.data);
-      if (event.data.loaded) {
-        setIsIframeLoading(false);
-      }
     };
 
     window.addEventListener("message", handleMessage);
