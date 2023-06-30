@@ -1,11 +1,18 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
 
+import { FBXLoader } from "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js";
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+let big_data = {};
 
-import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
-import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
-import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
-
+window.addEventListener("message", function (event) {
+  // Handle incoming message from the iframe
+  const data = event.data; // Access the data sent from the iframe
+  // Process the data as needed
+  big_data = data;
+  console.log(big_data, "DDDAAATA");
+});
 
 class BasicCharacterControls {
   constructor(params) {
@@ -25,7 +32,7 @@ class BasicCharacterControls {
     this._acceleration = new THREE.Vector3(1, 0.25, 50.0);
 
     this._velocity = new THREE.Vector3(0, 0, 0);
-    
+
     // document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
     // document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
   }
@@ -77,13 +84,14 @@ class BasicCharacterControls {
   Update(timeInSeconds) {
     const velocity = this._velocity;
     const frameDecceleration = new THREE.Vector3(
-        velocity.x * this._decceleration.x,
-        velocity.y * this._decceleration.y,
-        velocity.z * this._decceleration.z
+      velocity.x * this._decceleration.x,
+      velocity.y * this._decceleration.y,
+      velocity.z * this._decceleration.z
     );
     frameDecceleration.multiplyScalar(timeInSeconds);
-    frameDecceleration.z = Math.sign(frameDecceleration.z) * Math.min(
-        Math.abs(frameDecceleration.z), Math.abs(velocity.z));
+    frameDecceleration.z =
+      Math.sign(frameDecceleration.z) *
+      Math.min(Math.abs(frameDecceleration.z), Math.abs(velocity.z));
 
     velocity.add(frameDecceleration);
 
@@ -132,7 +140,6 @@ class BasicCharacterControls {
   }
 }
 
-
 class LoadModelDemo {
   constructor() {
     this._Initialize();
@@ -162,7 +169,7 @@ class LoadModelDemo {
 
     this._scene = new THREE.Scene();
 
-    let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
+    let light = new THREE.DirectionalLight(0xffffff, 1.0);
     light.position.set(20, 100, 10);
     light.target.position.set(0, 0, 0);
     light.castShadow = true;
@@ -179,31 +186,31 @@ class LoadModelDemo {
     light.shadow.camera.bottom = -100;
     this._scene.add(light);
 
-    light = new THREE.AmbientLight(0xFFFFFF, 4.0);
+    light = new THREE.AmbientLight(0xffffff, 4.0);
     this._scene.add(light);
 
-    const controls = new OrbitControls(
-    this._camera, this._threejs.domElement);
-    controls.enabled = false
+    const controls = new OrbitControls(this._camera, this._threejs.domElement);
+    controls.enabled = false;
     controls.target.set(0, 20, 0);
     controls.update();
 
     const loader = new THREE.CubeTextureLoader();
     const texture = loader.load([
-        './resources/posx.jpg',
-        './resources/negx.jpg',
-        './resources/posy.jpg',
-        './resources/negy.jpg',
-        './resources/posz.jpg',
-        './resources/negz.jpg',
+      "./resources/posx.jpg",
+      "./resources/negx.jpg",
+      "./resources/posy.jpg",
+      "./resources/negy.jpg",
+      "./resources/posz.jpg",
+      "./resources/negz.jpg",
     ]);
     this._scene.background = texture;
 
     const plane = new THREE.Mesh(
-        new THREE.PlaneGeometry(200, 100, 10, 10),
-        new THREE.MeshStandardMaterial({
-            color: 0x202020,
-          }));
+      new THREE.PlaneGeometry(200, 100, 10, 10),
+      new THREE.MeshStandardMaterial({
+        color: 0x202020,
+      })
+    );
     plane.castShadow = false;
     plane.receiveShadow = true;
     plane.rotation.x = -Math.PI / 2;
@@ -225,78 +232,71 @@ class LoadModelDemo {
   _LoadAnimatedModels() {
     const loader = new FBXLoader();
 
-
-    
-    loader.setPath('./resources/zombie/')
-    loader.load('dalida.fbx', (fbx) => {
-      const model1 = fbx
+    loader.setPath("./resources/zombie/");
+    loader.load(`${big_data.player1}.fbx`, (fbx) => {
+      const model1 = fbx;
       model1.scale.setScalar(23);
-      model1.traverse(c => {
-        if(c.isMesh){
-            c.castShadow = true;
-            c.receiveShadow = true
-            c.material.color = new THREE.Color(0x666666); // Darker color
-            c.material.emissive = new THREE.Color(0x000000);
+      model1.traverse((c) => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+          c.material.color = new THREE.Color(0x666666); // Darker color
+          c.material.emissive = new THREE.Color(0x000000);
         }
       });
 
-      model1.rotation.y = 0.7
-
-
+      model1.rotation.y = 0.7;
 
       const params = {
         target: model1,
         camera: this._camera,
-      }
+      };
       this._controls = new BasicCharacterControls(params);
-      
+
       const anim = new FBXLoader();
-      anim.setPath('./resources/zombie/');
-      anim.load('twerk.fbx', (anim) => {
+      anim.setPath("./resources/zombie/");
+      anim.load("twerk.fbx", (anim) => {
         const m = new THREE.AnimationMixer(model1);
         this._mixers.push(m);
         const idle = m.clipAction(anim.animations[0]);
         idle.play();
       });
-      model1.position.set(17,0,10)
-      
-      
-      this._scene.add(model1);
+      model1.position.set(17, 0, 10);
 
-      
+      this._scene.add(model1);
     });
 
-    loader.setPath('./resources/zombie/');
-    loader.load('almaz.fbx', (fbx) => {
-      const model2 = fbx
+    loader.setPath("./resources/zombie/");
+    loader.load(`${big_data.player2}.fbx`, (fbx) => {
+      const model2 = fbx;
       model2.scale.setScalar(23);
-      model2.traverse(c => {
-        if(c.isMesh){
-            c.castShadow = true;
-            c.receiveShadow = true
-            c.material.color = new THREE.Color(0x555555); // Darker color
-            c.material.emissive = new THREE.Color(0x000000);
+      model2.traverse((c) => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+          c.material.color = new THREE.Color(0x555555); // Darker color
+          c.material.emissive = new THREE.Color(0x000000);
         }
       });
 
       const params = {
         target: model2,
         camera: this._camera,
-      }
+      };
       this._controls = new BasicCharacterControls(params);
-      
 
       const anim = new FBXLoader();
-      anim.setPath('./resources/zombie/');
-      anim.load('Breakdance Uprock Var 2.fbx', (anim) => {
+      anim.setPath("./resources/zombie/");
+      anim.load("Breakdance Uprock Var 2.fbx", (anim) => {
         const m = new THREE.AnimationMixer(model2);
         this._mixers.push(m);
         const idle = m.clipAction(anim.animations[0]);
         idle.play();
       });
-      model2.position.set(-17,0,10)
-      
+      model2.position.set(-17, 0, 10);
+
       this._scene.add(model2);
+      window.parent.postMessage({ loaded: true }, "*");
     });
   }
 
@@ -310,17 +310,13 @@ class LoadModelDemo {
   //       c.receiveShadow = true
   //     });
 
-    
-
-
-
   //     const params = {
   //       target: fbx,
   //       camera: this._camera,
   //     }
 
   //     this._controls = new BasicCharacterControls(params);
-      
+
   //     const anim = new FBXLoader();
   //     anim.setPath('./resources/zombie/');
   //     anim.load('twerk.fbx', (anim) => {
@@ -330,24 +326,23 @@ class LoadModelDemo {
   //       idle.play();
   //     });
   //     fbx.position.set(-25,0,10)
-    
-      
+
   //     this._scene.add(fbx);
   //   });
   // }
   _LoadAnimatedModelAndPlay(path, modelFile, animFile, offset) {
     const loader = new FBXLoader();
-    loader.setPath('./resources/zombie');
-    loader.load('almaz.fbx', (fbx) => {
+    loader.setPath("./resources/zombie");
+    loader.load("almaz.fbx", (fbx) => {
       fbx.scale.setScalar(23);
-      fbx.traverse(c => {
+      fbx.traverse((c) => {
         c.castShadow = true;
       });
       fbx.position.copy(offset);
 
       const anim = new FBXLoader();
-      anim.setPath('./resources/zombie');
-      anim.load('twerk.fbx', (anim) => {
+      anim.setPath("./resources/zombie");
+      anim.load("twerk.fbx", (anim) => {
         const m = new THREE.AnimationMixer(fbx);
         this._mixers.push(m);
         const idle = m.clipAction(anim.animations[0]);
@@ -359,8 +354,8 @@ class LoadModelDemo {
 
   _LoadModel() {
     const loader = new GLTFLoader();
-    loader.load('./resources/thing.glb', (gltf) => {
-      gltf.scene.traverse(c => {
+    loader.load("./resources/thing.glb", (gltf) => {
+      gltf.scene.traverse((c) => {
         c.castShadow = true;
       });
       this._scene.add(gltf.scene);
@@ -390,7 +385,7 @@ class LoadModelDemo {
   _Step(timeElapsed) {
     const timeElapsedS = timeElapsed * 0.001;
     if (this._mixers) {
-      this._mixers.map(m => m.update(timeElapsedS));
+      this._mixers.map((m) => m.update(timeElapsedS));
     }
 
     if (this._controls) {
@@ -399,9 +394,10 @@ class LoadModelDemo {
   }
 }
 
-
 let _APP = null;
 
-window.addEventListener('DOMContentLoaded', () => {
-  _APP = new LoadModelDemo();
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    _APP = new LoadModelDemo();
+  }, 1000);
 });

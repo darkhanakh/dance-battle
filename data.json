@@ -1,31 +1,31 @@
 [
   {
-    "name": "Ментор 1",
+    "name": "alibek",
     "src": "/assets/mentor_1.jpg"  },
   {
-    "name": "Нурали",
+    "name": "nurali",
     "src": "/assets/mentor_2.jpg"  },
   {
-    "name": "Алмаз",
+    "name": "almaz",
     "src": "/assets/mentor_3.jpg"  },
   {
-    "name": "Арман",
+    "name": "arman",
     "src": "/assets/mentor_4.jpg"
   },
   {
-    "name": "Далида",
+    "name": "dalida",
     "src": "/assets/mentor_5.jpg"
   },
   {
-    "name": "Ернур",
+    "name": "ernurr",
     "src": "/assets/mentor_6.jpg"
   },
   {
-    "name": "Хафиз",
+    "name": "khafiz",
     "src": "/assets/mentor_7.jpg"
   },
   {
-    "name": "Бекнар",
+    "name": "beknar",
     "src": "/assets/mentor_8.jpg"
   }
 ]

@@ -1,29 +1,56 @@
-import React, { useState } from 'react';
-import {FC} from 'react'
-import useDancerModelPath from '../hooks/useDancerModel';
-import { PlayersMentor } from '../../pages/MentorSelection';
+import { useEffect, useRef, useState } from "react";
+import { FC } from "react";
 
-
-interface IBattle{
-    player1: PlayersMentor
-    player2: PlayersMentor
+interface IBattle {
+  player1: string;
+  player2: string;
 }
 
-const Battle = () => {
-    // const [score1, setScore1] = useState(0)
-    // const [score2, setScore2] = useState(0)
+const Battle: FC<IBattle> = ({ player1, player2 }) => {
+  const [isIframeLoading, setIsIframeLoading] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const sendDataToIframe = () => {
+    const iframe = iframeRef.current;
 
-    // const player1Model = useDancerModelPath(player1.name) //path to file .${name}.fbx
-    // const player2Model = useDancerModelPath(player2.name) //path to file .${name}.fbx
+    if (iframe && iframe.contentWindow) {
+      const data = {
+        player1: player1 && player1.replace(/["']/g, ""),
+        player2: player2 && player2.replace(/["']/g, ""),
+      };
 
-    
-    return (    
-        <div>
-            <iframe src="/iframes/index.html" width={1850} height={970}>
-        
-            </iframe>
-        </div>
-    );
+      iframe.contentWindow.postMessage(data);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      sendDataToIframe();
+    }, 300);
+    const handleMessage = (event) => {
+      console.log("event.data", event.data);
+      if (event.data.loaded) {
+        setIsIframeLoading(false);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
+
+  return (
+    <div>
+      <iframe
+        src="/iframes/index.html"
+        ref={iframeRef}
+        width={800}
+        height={600}
+      ></iframe>
+    </div>
+  );
 };
 
 export default Battle;

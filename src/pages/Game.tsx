@@ -3,10 +3,13 @@ import "./../styles/TestRhythms.css";
 import Countdown from "../components/layout/Countdown.tsx";
 // @ts-ignore
 import useSound from "use-sound";
+import queryString from "query-string";
+import { useLocation } from "react-router";
 
-import music from "./../../public/assets/audios/music_1.mp3";
+import music from "../assets/audios/music_1.mp3";
+import Battle from "../components/Battle/Battle.tsx";
 
-const TestRhythm = () => {
+const Game = () => {
   const [isCountdownEnded, setIsCountdownEnded] = useState(false);
   const [firstPlayerPoints, setFirstPlayerPoints] = useState(0);
   const [secondPlayerPoints, setSecondPlayerPoints] = useState(0);
@@ -16,6 +19,12 @@ const TestRhythm = () => {
 
   const firstIframeRef = useRef<HTMLIFrameElement>(null);
   const secondIframeRef = useRef<HTMLIFrameElement>(null);
+
+  const location = useLocation();
+
+  const queryParams = queryString.parse(location.search);
+  const player1 = queryParams.player1 as string;
+  const player2 = queryParams.player2 as string;
 
   const calculateWinner = () => {
     if (firstPlayerPoints > secondPlayerPoints) {
@@ -126,7 +135,7 @@ const TestRhythm = () => {
         ></iframe>
       </div>
       {!isCountdownEnded && renderCountdownAndPlaySound()}
-
+      {isCountdownEnded && <Battle player1={player1} player2={player2} />}
       <div className="box" style={{ float: "left", marginRight: "20px" }}>
         <iframe
           ref={secondIframeRef}
@@ -149,4 +158,4 @@ const TestRhythm = () => {
   );
 };
 
-export default TestRhythm;
+export default Game;

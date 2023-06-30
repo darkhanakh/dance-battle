@@ -70,7 +70,10 @@ const MentorSelection: React.FC = () => {
               ))}
             </div>
             {selectedMentors.player1 && selectedMentors.player2 ? (
-              <Link to="/test-game" className="btn btn-primary">
+              <Link
+                to={`/game?player1=${selectedMentors.player1.name}&player2=${selectedMentors.player2.name}`}
+                className="btn btn-primary"
+              >
                 Начать игру
               </Link>
             ) : (
