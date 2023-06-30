@@ -233,7 +233,7 @@ class LoadModelDemo {
     const loader = new FBXLoader();
 
     loader.setPath("./resources/zombie/");
-    loader.load(`${big_data.player1}.fbx`, (fbx) => {
+    loader.load(`${big_data.player2}.fbx`, (fbx) => {
       const model1 = fbx;
       model1.scale.setScalar(23);
       model1.traverse((c) => {
@@ -267,7 +267,7 @@ class LoadModelDemo {
     });
 
     loader.setPath("./resources/zombie/");
-    loader.load(`${big_data.player2}.fbx`, (fbx) => {
+    loader.load(`${big_data.player1}.fbx`, (fbx) => {
       const model2 = fbx;
       model2.scale.setScalar(23);
       model2.traverse((c) => {
