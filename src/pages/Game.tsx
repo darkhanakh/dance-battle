@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import "./../styles/TestRhythms.css";
 import Countdown from "../components/layout/Countdown.tsx";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import useSound from "use-sound";
 import queryString from "query-string";
@@ -13,7 +14,6 @@ const Game = () => {
   const [isCountdownEnded, setIsCountdownEnded] = useState(false);
   const [firstPlayerPoints, setFirstPlayerPoints] = useState(0);
   const [secondPlayerPoints, setSecondPlayerPoints] = useState(0);
-  const [winner, setWinner] = useState("");
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [play, { stop }] = useSound(music, { volume: 0.5 });
 
@@ -28,11 +28,11 @@ const Game = () => {
 
   const calculateWinner = () => {
     if (firstPlayerPoints > secondPlayerPoints) {
-      return "First player wins!";
+      return "Первый игрок побеждает";
     } else if (firstPlayerPoints < secondPlayerPoints) {
-      return "Second player wins!";
+      return "Второй игрок побеждает";
     } else {
-      return "It's a tie!";
+      return "Ничья";
     }
   };
 
@@ -100,7 +100,6 @@ const Game = () => {
   const handleResetGame = () => {
     setFirstPlayerPoints(0);
     setSecondPlayerPoints(0);
-    setWinner("");
     setIsCountdownEnded(false);
     setIsGameEnded(false);
   };
@@ -131,8 +130,8 @@ const Game = () => {
       )}
       {isGameEnded && (
         <div>
-          <div className="text-3xl">{winner}</div>
-          <button className="btn btn-primary" onClick={handleResetGame}>
+          <div className="text-3xl mb-3">{calculateWinner()}</div>
+          <button className="btn btn-primary " onClick={handleResetGame}>
             Начать заново
           </button>
         </div>
