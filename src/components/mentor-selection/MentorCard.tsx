@@ -18,7 +18,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ selectedMentors, player }) => {
             Выбор {player === "player1" ? "первого " : "второго"} игрока
           </h2>
           <img
-            className="w-fit h-96"
+            className="w-fit h-96 rounded-xl"
             src={selectedMentors[player]?.src}
             alt="Selected Mentor"
           />

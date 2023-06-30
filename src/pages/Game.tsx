@@ -131,9 +131,9 @@ const Game = () => {
       )}
       {isGameEnded && (
         <div>
-          <div className="winner-text">{winner}</div>
+          <div className="text-3xl">{winner}</div>
           <button className="btn btn-primary" onClick={handleResetGame}>
-            Reset Game
+            Начать заново
           </button>
         </div>
       )}
